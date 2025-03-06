@@ -1,23 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, ComposedChart, Bar, ReferenceLine } from 'recharts';
 
-// Define interfaces for data types
-interface DataItem {
-  date: string;
-  close: number;
-  backtestClose: number | null;
-  isPointOfDivergence?: boolean;
-  [key: string]: any; // Allow for additional properties
-}
-
-interface BollingerBand {
-  middle: number | null;
-  upper: number | null;
-  lower: number | null;
-}
-
 const StockChartWithMACD = () => {
-  const [data, setData] = useState<DataItem[]>([]);
+  const [data, setData] = useState([]);
   const [showActualBands, setShowActualBands] = useState(true);
   const [showBacktestBands, setShowBacktestBands] = useState(true);
   
@@ -99,9 +84,9 @@ Jun 29 2022,3818.83,`;
     });
 
     // Calculate EMA for a specific period
-    function calculateEMA(data: DataItem[], field: string, period: number): (number | null)[] {
+    function calculateEMA(data, field, period) {
       const k = 2 / (period + 1);
-      const result: (number | null)[] = [];
+      const result = [];
       
       // Initialize with SMA for the first period points
       let sum = 0;
@@ -131,7 +116,7 @@ Jun 29 2022,3818.83,`;
     }
 
     // Calculate MACD
-    function calculateMACD(data: DataItem[], field: string) {
+    function calculateMACD(data, field) {
       // Calculate short-term EMA (12 days)
       const ema12 = calculateEMA(data, field, 12);
       
@@ -140,7 +125,7 @@ Jun 29 2022,3818.83,`;
       
       // Calculate MACD line (EMA12 - EMA26)
       const macdLine = ema12.map((value, i) => 
-        value !== null && ema26[i] !== null ? value - (ema26[i] as number) : null
+        value !== null && ema26[i] !== null ? value - ema26[i] : null
       );
       
       // Calculate signal line (9-day EMA of MACD line)
@@ -153,15 +138,15 @@ Jun 29 2022,3818.83,`;
       
       // Calculate histogram (MACD line - signal line)
       const histogram = macdLine.map((value, i) => 
-        value !== null && signalLine[i] !== null ? value - (signalLine[i] as number) : null
+        value !== null && signalLine[i] !== null ? value - signalLine[i] : null
       );
       
       return { macdLine, signalLine, histogram };
     }
 
     // Calculate Bollinger Bands for a dataset
-    function calculateBollingerBands(data: DataItem[], field: string, period = 20, multiplier = 2): BollingerBand[] {
-      const result: BollingerBand[] = [];
+    function calculateBollingerBands(data, field, period = 20, multiplier = 2) {
+      const result = [];
       
       for (let i = 0; i < data.length; i++) {
         if (i < period - 1) {
@@ -229,8 +214,8 @@ Jun 29 2022,3818.83,`;
     const actualBollingerBands = calculateBollingerBands(processedData, 'close');
 
     // Calculate RSI (14-period) for both series
-    function calculateRSI(data: DataItem[], field: string, period = 14): (number | null)[] {
-      const rsiValues: (number | null)[] = [];
+    function calculateRSI(data, field, period = 14) {
+      const rsiValues = [];
       
       // Need at least period+1 data points to calculate first RSI
       for (let i = 0; i < data.length; i++) {
@@ -303,10 +288,10 @@ Jun 29 2022,3818.83,`;
   }, []);
 
   // Format date for tooltip
-  const formatDate = (value: string): string => value;
+  const formatDate = (value) => value;
   
   // Helper function to determine bar color
-  const getBarColor = (entry: any, key: string): string => {
+  const getBarColor = (entry, key) => {
     if (!entry || entry[key] === null || entry[key] === undefined) return "#999";
     return entry[key] > 0 ? "#00AA00" : "#DD0000";
   };
@@ -366,7 +351,7 @@ Jun 29 2022,3818.83,`;
               tick={{ fontSize: 12 }}
             />
             <Tooltip 
-              formatter={(value: any) => typeof value === 'number' ? value.toFixed(2) : 'N/A'}
+              formatter={(value) => value ? value.toFixed(2) : 'N/A'}
               labelFormatter={formatDate}
             />
             <Legend />
@@ -481,15 +466,14 @@ Jun 29 2022,3818.83,`;
               tick={{ fontSize: 12 }}
             />
             <Tooltip 
-              formatter={(value: any) => typeof value === 'number' ? value.toFixed(2) : 'N/A'}
+              formatter={(value) => value !== null && value !== undefined ? value.toFixed(2) : 'N/A'}
               labelFormatter={formatDate}
             />
             <Legend />
             <ReferenceLine y={0} stroke="#888888" />
             <Bar 
               dataKey="closeHistogram" 
-              fill="#8884d8"
-              stroke="#8884d8"
+              fill={(entry) => getBarColor(entry, 'closeHistogram')}
               name="Histogram" 
             />
             <Line 
@@ -539,15 +523,14 @@ Jun 29 2022,3818.83,`;
               tick={{ fontSize: 12 }}
             />
             <Tooltip 
-              formatter={(value: any) => typeof value === 'number' ? value.toFixed(2) : 'N/A'}
+              formatter={(value) => value !== null && value !== undefined ? value.toFixed(2) : 'N/A'}
               labelFormatter={formatDate}
             />
             <Legend />
             <ReferenceLine y={0} stroke="#888888" />
             <Bar 
               dataKey="backtestHistogram" 
-              fill="#8884d8"
-              stroke="#8884d8"
+              fill={(entry) => getBarColor(entry, 'backtestHistogram')}
               name="Histogram" 
             />
             <Line 
@@ -599,7 +582,7 @@ Jun 29 2022,3818.83,`;
               ticks={[0, 30, 50, 70, 100]}
             />
             <Tooltip 
-              formatter={(value: any) => typeof value === 'number' ? value.toFixed(2) : 'N/A'}
+              formatter={(value) => value !== null && value !== undefined ? value.toFixed(2) : 'N/A'}
               labelFormatter={formatDate}
             />
             <Legend />
@@ -647,7 +630,7 @@ Jun 29 2022,3818.83,`;
               ticks={[0, 30, 50, 70, 100]}
             />
             <Tooltip 
-              formatter={(value: any) => typeof value === 'number' ? value.toFixed(2) : 'N/A'}
+              formatter={(value) => value !== null && value !== undefined ? value.toFixed(2) : 'N/A'}
               labelFormatter={formatDate}
             />
             <Legend />

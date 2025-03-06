@@ -153,7 +153,7 @@ Jun 29 2022,3818.83,`;
       
       // Calculate histogram (MACD line - signal line)
       const histogram = macdLine.map((value, i) => 
-        value !== null && signalLine[i] !== null ? value - (signalLine[i] as number) : null
+        value !== null && signalLine[i] !== null ? value - signalLine[i] : null
       );
       
       return { macdLine, signalLine, histogram };
@@ -366,7 +366,7 @@ Jun 29 2022,3818.83,`;
               tick={{ fontSize: 12 }}
             />
             <Tooltip 
-              formatter={(value: any) => typeof value === 'number' ? value.toFixed(2) : 'N/A'}
+              formatter={(value) => value ? value.toFixed(2) : 'N/A'}
               labelFormatter={formatDate}
             />
             <Legend />
@@ -481,15 +481,14 @@ Jun 29 2022,3818.83,`;
               tick={{ fontSize: 12 }}
             />
             <Tooltip 
-              formatter={(value: any) => typeof value === 'number' ? value.toFixed(2) : 'N/A'}
+              formatter={(value) => value !== null && value !== undefined ? value.toFixed(2) : 'N/A'}
               labelFormatter={formatDate}
             />
             <Legend />
             <ReferenceLine y={0} stroke="#888888" />
             <Bar 
               dataKey="closeHistogram" 
-              fill="#8884d8"
-              stroke="#8884d8"
+              fill={(entry) => getBarColor(entry, 'closeHistogram')}
               name="Histogram" 
             />
             <Line 
@@ -539,15 +538,14 @@ Jun 29 2022,3818.83,`;
               tick={{ fontSize: 12 }}
             />
             <Tooltip 
-              formatter={(value: any) => typeof value === 'number' ? value.toFixed(2) : 'N/A'}
+              formatter={(value) => value !== null && value !== undefined ? value.toFixed(2) : 'N/A'}
               labelFormatter={formatDate}
             />
             <Legend />
             <ReferenceLine y={0} stroke="#888888" />
             <Bar 
               dataKey="backtestHistogram" 
-              fill="#8884d8"
-              stroke="#8884d8"
+              fill={(entry) => getBarColor(entry, 'backtestHistogram')}
               name="Histogram" 
             />
             <Line 
@@ -599,7 +597,7 @@ Jun 29 2022,3818.83,`;
               ticks={[0, 30, 50, 70, 100]}
             />
             <Tooltip 
-              formatter={(value: any) => typeof value === 'number' ? value.toFixed(2) : 'N/A'}
+              formatter={(value) => value !== null && value !== undefined ? value.toFixed(2) : 'N/A'}
               labelFormatter={formatDate}
             />
             <Legend />
@@ -647,7 +645,7 @@ Jun 29 2022,3818.83,`;
               ticks={[0, 30, 50, 70, 100]}
             />
             <Tooltip 
-              formatter={(value: any) => typeof value === 'number' ? value.toFixed(2) : 'N/A'}
+              formatter={(value) => value !== null && value !== undefined ? value.toFixed(2) : 'N/A'}
               labelFormatter={formatDate}
             />
             <Legend />

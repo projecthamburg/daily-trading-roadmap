@@ -488,8 +488,7 @@ Jun 29 2022,3818.83,`;
             <ReferenceLine y={0} stroke="#888888" />
             <Bar 
               dataKey="closeHistogram" 
-              fill="#8884d8"
-              stroke="#8884d8"
+              fill={(entry) => getBarColor(entry, 'closeHistogram')}
               name="Histogram" 
             />
             <Line 
@@ -546,8 +545,7 @@ Jun 29 2022,3818.83,`;
             <ReferenceLine y={0} stroke="#888888" />
             <Bar 
               dataKey="backtestHistogram" 
-              fill="#8884d8"
-              stroke="#8884d8"
+              fill={(entry) => getBarColor(entry, 'backtestHistogram')}
               name="Histogram" 
             />
             <Line 

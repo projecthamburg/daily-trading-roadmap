@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/daily-trading-roadmap/static/css/main.dc9b6a2b.css",
+    "main.js": "/daily-trading-roadmap/static/js/main.83836e3c.js",
+    "index.html": "/daily-trading-roadmap/index.html",
+    "main.dc9b6a2b.css.map": "/daily-trading-roadmap/static/css/main.dc9b6a2b.css.map",
+    "main.83836e3c.js.map": "/daily-trading-roadmap/static/js/main.83836e3c.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.dc9b6a2b.css",
+    "static/js/main.83836e3c.js"
+  ]
+}

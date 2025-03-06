@@ -489,7 +489,6 @@ Jun 29 2022,3818.83,`;
             <Bar 
               dataKey="closeHistogram" 
               fill="#8884d8"
-              stroke="#8884d8"
               name="Histogram" 
             />
             <Line 
@@ -547,7 +546,6 @@ Jun 29 2022,3818.83,`;
             <Bar 
               dataKey="backtestHistogram" 
               fill="#8884d8"
-              stroke="#8884d8"
               name="Histogram" 
             />
             <Line 
