@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/daily-trading-roadmap/static/css/main.dc9b6a2b.css",
-    "main.js": "/daily-trading-roadmap/static/js/main.83836e3c.js",
+    "main.js": "/daily-trading-roadmap/static/js/main.7ffd15f4.js",
     "index.html": "/daily-trading-roadmap/index.html",
     "main.dc9b6a2b.css.map": "/daily-trading-roadmap/static/css/main.dc9b6a2b.css.map",
-    "main.83836e3c.js.map": "/daily-trading-roadmap/static/js/main.83836e3c.js.map"
+    "main.7ffd15f4.js.map": "/daily-trading-roadmap/static/js/main.7ffd15f4.js.map"
   },
   "entrypoints": [
     "static/css/main.dc9b6a2b.css",
-    "static/js/main.83836e3c.js"
+    "static/js/main.7ffd15f4.js"
   ]
 }
